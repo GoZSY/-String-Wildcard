@@ -33,5 +33,45 @@ public:
         
     }
 };
-
+/****************************************************
+ * ************************************************/
+ int helper(const char *pa, const char *pb)
+{
+        if ( *pa=='\0' )
+        {
+                while(*pb == '*')
+                        ++pb;
+                if ( *pb )
+                        return 0;
+                else
+                        return 1;
+        }
+        else if ( *pb == '\0' )
+                return 0;
+ 
+        if ( *pa == *pb )
+                return helper(++pa, ++pb);
+ 
+        if ( *pb == '.' )
+                return helper(++pa, ++pb);
+ 
+        if ( *pb == '*' )
+        {
+                const char *tmp = pa - 1;
+                while ( *(tmp + 1) == *(pa - 1) )
+                        tmp++;
+                int flag = 0;
+                int len = tmp - pa + 1;
+                int i;
+                for(i=0; i<=len; ++i)
+                {
+                        flag = flag || helper(pa+i, pb+1);
+                }
+ 
+                return flag;
+        }
+ 
+        if ( *pa != *pb )
+                return 0;
+}
 
